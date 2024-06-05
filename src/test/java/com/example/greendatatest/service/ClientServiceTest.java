@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
+import static com.example.greendatatest.entity.LegalForm.LLC;
 import static com.example.greendatatest.repository.QueryOperator.LIKE;
 import static org.mockito.Mockito.doReturn;
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +41,7 @@ public class ClientServiceTest {
     @Test
     void getAllClients(){
         List<Client> clients =LongStream.range(1, 4)
-                .mapToObj(i -> new Client( i,"name%d".formatted(i),"sname%d".formatted(i),"adres%d".formatted(i),"lf%d".formatted(i)))
+                .mapToObj(i -> new Client( i,"name%d".formatted(i),"sname%d".formatted(i),"adres%d".formatted(i),LLC))
                 .toList();
 
         doReturn(clients).when(clientRepository).findAll();
@@ -56,7 +57,7 @@ public class ClientServiceTest {
     void getFilteredClients(){
 
         List<Client> clients = LongStream.range(1, 4)
-                .mapToObj(i -> new Client(i,"name%d".formatted(i),"sname%d".formatted(i),"adres%d".formatted(i),"lf%d".formatted(i)))
+                .mapToObj(i -> new Client(i,"name%d".formatted(i),"sname%d".formatted(i),"adres%d".formatted(i),LLC))
                 .toList();
         Specification<Client> spec = Specification.where(null);
         Sort sort = Sort.by(Sort.Direction.ASC,"name");
@@ -78,7 +79,7 @@ public class ClientServiceTest {
     @Test
     void getClientById(){
 
-        Client client = new Client(1L,"name","sName","address","LF");
+        Client client = new Client(1L,"name","sName","address",LLC);
         doReturn(Optional.of(client)).when(clientRepository).findById(1L);
 
         Client result = clientService.getClientById(1L);
@@ -90,22 +91,22 @@ public class ClientServiceTest {
 
     @Test
     void createClient(){
-        Client client = new Client(1L,"name","sName","address","LF");
+        Client client = new Client(1L,"name","sName","address",LLC);
 
-        doReturn(client).when(clientRepository).save(new Client(null,"name","sName","address","LF"));
+        doReturn(client).when(clientRepository).save(new Client(null,"name","sName","address",LLC));
 
-        Client result = clientService.createClient(new Client(null,"name","sName","address","LF"));
+        Client result = clientService.createClient(new Client(null,"name","sName","address",LLC));
 
         assertEquals(client, result);
-        verify(clientRepository).save(new Client(null,"name","sName","address","LF"));
+        verify(clientRepository).save(new Client(null,"name","sName","address",LLC));
 
     }
 
     @Test
     void updateClient(){
-        Client client = new Client(1L,"name","sName","address","LF");
-        Client clientToUpdate = new Client(null,"name1","sName1","address","LF");
-        Client updatedClient = new Client(1L,"name1","sName1","address","LF");
+        Client client = new Client(1L,"name","sName","address",LLC);
+        Client clientToUpdate = new Client(null,"name1","sName1","address",LLC);
+        Client updatedClient = new Client(1L,"name1","sName1","address",LLC);
 
         doReturn(Optional.of(client)).when(clientRepository).findById(1L);
         doReturn(updatedClient).when(clientRepository).save(updatedClient);
