@@ -1,9 +1,6 @@
 package com.example.greendatatest.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Data
@@ -22,6 +19,7 @@ public class Client {
 
     private String address;
 
-    private String legalForm;
+    @Enumerated(EnumType.STRING)
+    private LegalForm legalForm;
 
 }
