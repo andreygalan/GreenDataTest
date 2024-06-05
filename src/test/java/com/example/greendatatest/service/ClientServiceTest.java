@@ -35,7 +35,6 @@ public class ClientServiceTest {
     SpecificationCreator<Client> specificationCreator;
 
     @InjectMocks
-
     ClientServiceImpl clientService;
 
     @Test

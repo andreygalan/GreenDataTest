@@ -1,5 +1,6 @@
 package com.example.greendatatest.controller;
 
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,43 +12,57 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ClientControllerTest {
+public class BankControllerTest {
     @Autowired
     MockMvc mockMvc;
 
     @Test
-    @Sql("/sql/client.sql")
-    public void testGetAllClients() throws Exception {
+    @Sql("/sql/bank.sql")
+    public void testGetAllBanks() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/clients"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/banks"))
                 .andDo(print())
                 .andExpectAll(MockMvcResultMatchers.status().isOk(),
-                        content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+                        content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON),
+                        content().json("""
+                                [
+                                    {
+                                        "id":1,
+                                        "name":"банк1",
+                                        "bik":"бик1"
+                                    },
+                                    {
+                                        "id":2,
+                                        "name":"банк2",
+                                        "bik":"бик2"
+                                    },
+                                    {
+                                        "id":3,
+                                        "name":"банк3",
+                                        "bik":"бик3"
+                                        }
+                                ]
+                        """));
 
     }
 
     @Test
-    @Sql("/sql/client.sql")
-    public void testCreateClient() throws Exception {
+    @Sql("/sql/bank.sql")
+    public void testCreateBank() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/clients")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/banks")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                         {              
                                 "name": "string",
-                                "shortName": "string",
-                                "address": "string",
-                                "legalForm": "LLC"
-                             
+                                "bik": "string"
+          
                         }"""))
                 .andDo(print())
                 .andExpectAll(MockMvcResultMatchers.status().isCreated(),
@@ -55,40 +70,41 @@ public class ClientControllerTest {
                         content().json("""
                         {              
                                 "name": "string",
-                                "shortName": "string",
-                                "address": "string",
-                                "legalForm": "LLC"
-                             
-                        }"""));
-
+                                "bik": "string"
+               
+                        }
+                        """));
 
     }
 
     @Test
-    @Sql("/sql/client.sql")
-    public void testGetClientById() throws Exception {
+    @Sql("/sql/bank.sql")
+    public void testGetBankById() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/clients/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/banks/1"))
                 .andDo(print())
                 .andExpectAll(MockMvcResultMatchers.status().isOk(),
-                        content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-
+                        content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON),
+                        content().json("""
+                        {
+                            "id":1,
+                            "name":"банк1",
+                            "bik":"бик1"
+                        }
+                        """));
 
     }
 
     @Test
-    @Sql("/sql/client.sql")
-    public void testUpdateClient() throws Exception {
+    @Sql("/sql/bank.sql")
+    public void testUpdateBank() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/clients/1")
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/banks/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                         {              
                                 "name": "string",
-                                "shortName": "string",
-                                "address": "string",
-                                "legalForm": "LLC"
-                             
+                                "bik": "string" 
                         }"""))
 
                 .andDo(print())
@@ -98,27 +114,21 @@ public class ClientControllerTest {
                         {       
                                 "id": 1,
                                 "name": "string",
-                                "shortName": "string",
-                                "address": "string",
-                                "legalForm": "LLC"
-                             
+                                "bik": "string"
                         }""")
-                                );
+                );
 
     }
 
     @Test
-    @Sql("/sql/client.sql")
-    public void testDeleteClient() throws Exception {
+    @Sql("/sql/bank.sql")
+    public void testDeleteBank() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/clients/1"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/banks/1"))
                 .andDo(print())
                 .andExpectAll(MockMvcResultMatchers.status().isNoContent());
 
     }
-
-
-
 
 
 }

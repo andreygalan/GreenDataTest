@@ -1,11 +1,12 @@
 package com.example.greendatatest.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
@@ -17,16 +18,28 @@ public class Deposit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Client client;
+    @Schema(accessMode = Schema.AccessMode.WRITE_ONLY)
+    @Column(name = "bank_id")
+    private Long bankId;
 
-    @ManyToOne
-    private Bank bank;
+    @Schema(accessMode = Schema.AccessMode.WRITE_ONLY)
+    @Column(name = "client_id")
+    private Long clientId;
 
-    private LocalDate openingDate;
+    private Instant openingDate;
 
     private double percent;
 
     private int termInMonths;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "bank_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    private Bank bank;
 
 }

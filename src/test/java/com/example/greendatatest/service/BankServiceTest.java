@@ -2,7 +2,6 @@ package com.example.greendatatest.service;
 
 
 import com.example.greendatatest.entity.Bank;
-import com.example.greendatatest.entity.Client;
 import com.example.greendatatest.repository.BankRepository;
 import com.example.greendatatest.repository.Filter;
 import com.example.greendatatest.repository.SpecificationCreator;
@@ -33,7 +32,6 @@ public class BankServiceTest {
     SpecificationCreator<Bank> specificationCreator;
 
     @InjectMocks
-
     BankServiceImpl bankService;
 
     @Test
@@ -119,10 +117,10 @@ public class BankServiceTest {
 
     @Test
     void deleteBank(){
-        Long clientId = 1L;
+        Long bankId = 1L;
 
-        bankService.deleteBank(clientId);
-        verify(bankRepository).deleteById(clientId);
+        bankService.deleteBank(bankId);
+        verify(bankRepository).deleteById(bankId);
 
     }
 }
