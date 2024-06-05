@@ -1,6 +1,5 @@
 package com.example.greendatatest.controller;
 
-import com.example.greendatatest.entity.Bank;
 import com.example.greendatatest.entity.Deposit;
 import com.example.greendatatest.repository.Filter;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ public class DepositController {
     }
 
     @GetMapping("/filters")
-    public ResponseEntity<List<Deposit>> getFilteredBanks(
+    public ResponseEntity<List<Deposit>> getFilteredDeposits(
             @RequestParam List<Filter> filters,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection) {

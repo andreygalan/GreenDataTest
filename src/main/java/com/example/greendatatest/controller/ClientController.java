@@ -1,7 +1,5 @@
 package com.example.greendatatest.controller;
 
-
-import com.example.greendatatest.entity.Bank;
 import com.example.greendatatest.entity.Client;
 import com.example.greendatatest.repository.Filter;
 import com.example.greendatatest.service.ClientService;
@@ -27,7 +25,7 @@ public class ClientController {
     }
 
     @GetMapping("/filters")
-    public ResponseEntity<List<Client>> getFilteredBanks(
+    public ResponseEntity<List<Client>> getFilteredClients(
             @RequestParam List<Filter> filters,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection) {

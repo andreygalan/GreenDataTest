@@ -1,6 +1,5 @@
 package com.example.greendatatest.repository;
 
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,5 @@
 package com.example.greendatatest.controller;
 
-
 import com.example.greendatatest.entity.Bank;
 import com.example.greendatatest.repository.Filter;
 import com.example.greendatatest.service.BankService;
