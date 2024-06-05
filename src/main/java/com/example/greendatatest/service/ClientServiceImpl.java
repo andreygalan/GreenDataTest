@@ -2,7 +2,11 @@ package com.example.greendatatest.service;
 
 import com.example.greendatatest.entity.Client;
 import com.example.greendatatest.repository.ClientRepository;
+import com.example.greendatatest.repository.Filter;
+import com.example.greendatatest.repository.SpecificationCreator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +17,21 @@ import java.util.List;
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
+    private final SpecificationCreator<Client> specificationCreator;
 
     @Override
     public List<Client> getAllClients() {
         return clientRepository.findAll();
+    }
+
+    @Override
+    public List<Client> getFilteredClients(List<Filter> filters, String sortBy, String sortDirection) {
+
+        Specification<Client> specification = specificationCreator.getSpecificationFromFilters(filters);
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+
+        return clientRepository.findAll(specification, sort);
+
     }
 
     @Override
@@ -48,4 +63,6 @@ public class ClientServiceImpl implements ClientService {
     public void deleteClient(Long id) {
         clientRepository.deleteById(id);
     }
+
+
 }

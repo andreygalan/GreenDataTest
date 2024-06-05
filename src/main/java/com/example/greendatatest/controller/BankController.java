@@ -2,6 +2,7 @@ package com.example.greendatatest.controller;
 
 
 import com.example.greendatatest.entity.Bank;
+import com.example.greendatatest.repository.Filter;
 import com.example.greendatatest.service.BankService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,18 @@ public class BankController {
 
     private final BankService bankService;
 
+
     @GetMapping
     public ResponseEntity<List<Bank>> getAllBanks() {
         List<Bank> banks = bankService.getAllBanks();
+        return new ResponseEntity<>(banks, HttpStatus.OK);
+    }
+    @GetMapping("/filters")
+    public ResponseEntity<List<Bank>> getFilteredBanks(
+            @RequestParam List<Filter> filters,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+        List<Bank> banks = bankService.getFilteredBanks(filters, sortBy, sortDirection);
         return new ResponseEntity<>(banks, HttpStatus.OK);
     }
 

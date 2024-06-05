@@ -1,6 +1,8 @@
 package com.example.greendatatest.controller;
 
+import com.example.greendatatest.entity.Bank;
 import com.example.greendatatest.entity.Deposit;
+import com.example.greendatatest.repository.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,15 @@ public class DepositController {
     @GetMapping
     public ResponseEntity<List<Deposit>> getAllDeposits() {
         List<Deposit> deposits = depositService.getAllDeposits();
+        return new ResponseEntity<>(deposits, HttpStatus.OK);
+    }
+
+    @GetMapping("/filters")
+    public ResponseEntity<List<Deposit>> getFilteredBanks(
+            @RequestParam List<Filter> filters,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+        List<Deposit> deposits = depositService.getFilteredDeposits(filters, sortBy, sortDirection);
         return new ResponseEntity<>(deposits, HttpStatus.OK);
     }
 
