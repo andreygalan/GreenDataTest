@@ -48,7 +48,11 @@ public class SpecificationCreator<T> {
         }
     }
     private Object castToRequiredType(Class fieldType, String value) {
-        if(fieldType.isAssignableFrom(Double.class)){
+        if(fieldType.isAssignableFrom(String.class)) {
+            return value;
+        } else if(fieldType.isAssignableFrom(Long.class)) {
+            return Long.valueOf(value);
+        } else if(fieldType.isAssignableFrom(Double.class)){
             return Double.valueOf(value);
         }else if(fieldType.isAssignableFrom(Integer.class)){
             return Integer.valueOf(value);

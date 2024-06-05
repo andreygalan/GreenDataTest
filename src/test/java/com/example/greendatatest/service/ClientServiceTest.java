@@ -40,7 +40,7 @@ public class ClientServiceTest {
     @Test
     void getAllClients(){
         List<Client> clients =LongStream.range(1, 4)
-                .mapToObj(i -> new Client((long) i,"name%d".formatted(i),"sname%d".formatted(i),"adres%d".formatted(i),"lf%d".formatted(i)))
+                .mapToObj(i -> new Client( i,"name%d".formatted(i),"sname%d".formatted(i),"adres%d".formatted(i),"lf%d".formatted(i)))
                 .toList();
 
         doReturn(clients).when(clientRepository).findAll();
@@ -70,6 +70,8 @@ public class ClientServiceTest {
         List<Client> result = clientService.getFilteredClients(filters,"name" ,"asc");
 
         assertEquals(clients, result);
+        verify(clientRepository).findAll(spec, sort);
+        verify(specificationCreator).getSpecificationFromFilters(filters);
 
     }
 
