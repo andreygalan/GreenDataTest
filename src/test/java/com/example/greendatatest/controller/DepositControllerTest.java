@@ -61,7 +61,7 @@ public class DepositControllerTest {
     }
 
     @Test
-    @Sql({"/sql/bank.sql","/sql/client.sql", "/sql/deposit.sql"})
+    @Sql({"/sql/bank.sql","/sql/client.sql"})
     public void testCreateDeposit() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/deposits")

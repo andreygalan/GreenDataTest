@@ -53,7 +53,6 @@ public class BankControllerTest {
     }
 
     @Test
-    @Sql("/sql/bank.sql")
     public void testCreateBank() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/banks")

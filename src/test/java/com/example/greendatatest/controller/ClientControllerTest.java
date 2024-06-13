@@ -36,7 +36,6 @@ public class ClientControllerTest {
     }
 
     @Test
-    @Sql("/sql/client.sql")
     public void testCreateClient() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/clients")
