@@ -25,7 +25,7 @@ docker-compose up --build
 ```
 Для сборки без docker-compose нужно передать следующие переменные среды:
 - DB_HOST - адрес бд
-- DB_NAM - имя бд
+- DB_NAME - имя бд
 - DB_USER - имя пользователя
 - DB_USER_PASSWORD пароль
 
